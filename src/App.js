@@ -1,9 +1,8 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
 
 function Header(props) {
-    console.log(props.title);
+    // console.log(props.title);
     return (
         <header>
             <h1>
@@ -174,17 +173,35 @@ function App() {
         }
         content = <Article title={title} body={body}></Article>;
         contextControl = (
-            <li>
-                <a
-                    href={`/update/${id}`}
-                    onClick={(e) => {
-                        e.preventDefault();
-                        setMode("UPDATE");
-                    }}
-                >
-                    Update
-                </a>
-            </li>
+            <>
+                <li>
+                    <a
+                        href={`/update/${id}`}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            setMode("UPDATE");
+                        }}
+                    >
+                        Update
+                    </a>
+                </li>
+                <li>
+                    <input
+                        type="button"
+                        value="Delete"
+                        onClick={() => {
+                            const newTopics = [];
+                            for (let i = 0; i < topics.length; i++) {
+                                if (topics[i].id !== id) {
+                                    newTopics.push(topics[i]);
+                                }
+                            }
+                            setTopics(newTopics);
+                            setMode("WELCOME");
+                        }}
+                    />
+                </li>
+            </>
         );
     } else if (mode === "CREATE") {
         content = (
@@ -215,7 +232,7 @@ function App() {
                 title={title}
                 body={body}
                 onUpdate={(title, body) => {
-                    console.log(title, body);
+                    // console.log(title, body);
                     const newTopics = [...topics];
                     const updatedTopic = { id, title, body };
                     for (let i = 0; i < newTopics.length; i++) {
